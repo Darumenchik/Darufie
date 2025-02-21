@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Darufie</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #1e3c72, #2a5298);
+            color: white;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+        }
+        .player {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+            text-align: center;
+            width: 90%;
+            max-width: 400px;
+        }
+        audio {
+            width: 100%;
+            margin-top: 20px;
+        }
+        input[type="file"] {
+            margin-top: 20px;
+            display: none;
+        }
+        .playlist {
+            margin-top: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        .playlist button {
+            padding: 10px;
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        .playlist button:hover {
+            background: rgba(255, 255, 255, 0.4);
+        }
+        .controls {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 20px;
+        }
+        .controls button {
+            padding: 10px 20px;
+            background: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        .controls button:hover {
+            background: #0056b3;
+        }
+        .current-track {
+            margin-top: 20px;
+            font-size: 1.2em;
+        }
+        .progress-bar {
+            width: 100%;
+            height: 5px;
+            background: rgba(255, 255, 255, 0.2);
+            margin-top: 10px;
+            border-radius: 5px;
+            overflow: hidden;
+        }
+        .progress {
+            height: 100%;
+            background: #007bff;
+            width: 0%;
+        }
+    </style>
+</head>
+<body>
+    <div class="player">
+        <h1>Мой музыкальный плеер</h1>
+        <label for="audioFile" class="controls button">Загрузить треки</label>
+        <input type="file" id="audioFile" accept="audio/*" multiple>
+        <audio id="audioPlayer" controls></audio>
+        <div class="current-track" id="currentTrack">Трек не выбран</div>
+        <div class="progress-bar">
+            <div class="progress" id="progress"></div>
+        </div>
+        <div class="controls">
+            <button id="prevButton">Предыдущий</button>
+            <button id="nextButton">Следующий</button>
+        </div>
+        <div class="playlist" id="playlist"></div>
+    </div>
+
+    <script>
+        const audioFileInput = document.getElementById('audioFile');
+        const audioPlayer = document.getElementById('audioPlayer');
+        const playlistElement = document.getElementById('playlist');
+        const currentTrackElement = document.getElementById('currentTrack');
+        const progressBar = document.getElementById('progress');
+        const prevButton = document.getElementById('prevButton');
+        const nextButton = document.getElementById('nextButton');
+
+        let playlist = [];
+        let currentTrackIndex = 0;
+
+        // Инициализация IndexedDB
+        const dbName = 'MusicPlayerDB';
+        const storeName = 'tracks';
+        let db;
+
+        const request = indexedDB.open(dbName, 1);
+
+        request.onupgradeneeded = (event) => {
+            db = event.target.result;
+            if (!db.objectStoreNames.contains(storeName)) {
+                db.createObjectStore(storeName, { keyPath: 'id', autoIncrement: true });
+            }
+        };
+
+        request.onsuccess = (event) => {
+            db = event.target.result;
+            loadPlaylist();
+        };
+
+        request.onerror = (event) => {
+            console.error('Ошибка при открытии IndexedDB:', event.target.error);
+        };
+
+        // Загрузка плейлиста из IndexedDB
+        function loadPlaylist() {
+            const transaction = db.transaction(storeName, 'readonly');
+            const store = transaction.objectStore(storeName);
+            const request = store.getAll();
+
+            request.onsuccess = (event) => {
+                playlist = event.target.result;
+                updatePlaylist();
+                if (playlist.length > 0) {
+                    playTrack(currentTrackIndex);
+                }
+            };
+
+            request.onerror = (event) => {
+                console.error('Ошибка при загрузке плейлиста:', event.target.error);
+            };
+        }
+
+        // Сохранение трека в IndexedDB
+        function saveTrack(file) {
+            const reader = new FileReader();
+            reader.onload = (event) => {
+                const track = {
+                    name: file.name,
+                    data: event.target.result,
+                };
+
+                const transaction = db.transaction(storeName, 'readwrite');
+                const store = transaction.objectStore(storeName);
+                const request = store.add(track);
+
+                request.onsuccess = () => {
+                    loadPlaylist();
+                };
+
+                request.onerror = (event) => {
+                    console.error('Ошибка при сохранении трека:', event.target.error);
+                };
+            };
+            reader.readAsDataURL(file);
+        }
+
+        // Обновление плейлиста на странице
+        function updatePlaylist() {
+            playlistElement.innerHTML = '';
+            playlist.forEach((track, index) => {
+                const button = document.createElement('button');
+                button.textContent = track.name;
+                button.onclick = () => playTrack(index);
+                if (index === currentTrackIndex) {
+                    button.style.background = '#007bff';
+                }
+                playlistElement.appendChild(button);
+            });
+        }
+
+        // Воспроизведение трека по индексу
+        function playTrack(index) {
+            if (index >= 0 && index < playlist.length) {
+                currentTrackIndex = index;
+                const track = playlist[index];
+                audioPlayer.src = track.data;
+                audioPlayer.play();
+                currentTrackElement.textContent = `Сейчас играет: ${track.name}`;
+                updatePlaylist();
+            }
+        }
+
+        // Обработка загрузки файлов
+        audioFileInput.addEventListener('change', function(event) {
+            const files = event.target.files;
+            for (let i = 0; i < files.length; i++) {
+                saveTrack(files[i]);
+            }
+        });
+
+        // Кнопка "Следующий"
+        nextButton.addEventListener('click', () => {
+            playTrack((currentTrackIndex + 1) % playlist.length);
+        });
+
+        // Кнопка "Предыдущий"
+        prevButton.addEventListener('click', () => {
+            playTrack((currentTrackIndex - 1 + playlist.length) % playlist.length);
+        });
+
+        // Обновление прогресс-бара
+        audioPlayer.addEventListener('timeupdate', () => {
+            const progress = (audioPlayer.currentTime / audioPlayer.duration) * 100;
+            progressBar.style.width = `${progress}%`;
+        });
+    </script>
+</body>
+</html>
