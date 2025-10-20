@@ -1,0 +1,8 @@
+# Обязательные:
+pip install python-telegram-bot psutil pillow
+
+# Для медиа-функций (скриншоты, вебкамера, аудио):
+pip install opencv-python sounddevice numpy
+
+# Для дополнительных функций Windows:
+pip install pywin32
