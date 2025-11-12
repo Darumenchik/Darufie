@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title data-i18n="title"></title>
+    <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f0f4f8;
+            color: #333;
+            line-height: 1.6;
+        }
+        header {
+            background: linear-gradient(to right, #007bff, #00c6ff);
+            color: white;
+            padding: 60px 20px;
+            text-align: center;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            position: relative;
+        }
+        header h1 {
+            margin: 0;
+            font-size: 3em;
+            animation: fadeIn 1s ease-in;
+        }
+        .lang-buttons {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+        }
+        .lang-buttons button {
+            margin: 0 5px;
+            padding: 8px 15px;
+            border: none;
+            border-radius: 4px;
+            background: rgba(255,255,255,0.2);
+            color: white;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        .lang-buttons button:hover {
+            background: rgba(255,255,255,0.3);
+        }
+        nav {
+            background: #343a40;
+            padding: 10px;
+            text-align: center;
+        }
+        nav a {
+            color: white;
+            text-decoration: none;
+            margin: 0 15px;
+            font-weight: bold;
+            transition: color 0.3s;
+        }
+        nav a:hover {
+            color: #00c6ff;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+        section {
+            background: white;
+            border-radius: 8px;
+            padding: 30px;
+            margin-bottom: 40px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+        }
+        section:hover {
+            transform: translateY(-5px);
+        }
+        h2 {
+            color: #007bff;
+            border-bottom: 2px solid #007bff;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+        }
+        model-viewer {
+            width: 100%;
+            height: 500px;
+            margin: 20px 0;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        footer {
+            background: #343a40;
+            color: white;
+            text-align: center;
+            padding: 20px;
+            margin-top: 40px;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        @media (max-width: 768px) {
+            header h1 { font-size: 2em; }
+            nav a { display: block; margin: 10px 0; }
+            .lang-buttons {
+                position: static;
+                margin-top: 20px;
+            }
+        }
+        /* Dark mode */
+        body.dark-mode {
+            background-color: #121212;
+            color: #e0e0e0;
+        }
+        body.dark-mode header {
+            background: linear-gradient(to right, #0d47a1, #01579b);
+        }
+        body.dark-mode section {
+            background: #1e1e1e;
+        }
+        body.dark-mode h2 {
+            color: #00c6ff;
+            border-bottom-color: #00c6ff;
+        }
+        body.dark-mode nav, body.dark-mode footer {
+            background: #212121;
+        }
+        .theme-toggle {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: #fff;
+            border: none;
+            padding: 10px;
+            border-radius: 50%;
+            cursor: pointer;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            transition: background 0.3s;
+            z-index: 1000;
+        }
+        body.dark-mode .theme-toggle {
+            background: #333;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1 data-i18n="header"></h1>
+        <div class="lang-buttons">
+            <button onclick="setLanguage('en')">EN</button>
+            <button onclick="setLanguage('ru')">RU</button>
+            <button onclick="setLanguage('kk')">KK</button>
+        </div>
+    </header>
+    <nav>
+        <a href="index.html" data-i18n="nav_home"></a>
+        <a href="sun.html" data-i18n="nav_sun"></a>
+    </nav>
+    <div class="container">
+        <section>
+            <h2 data-i18n="section1_h2"></h2>
+            <p data-i18n="graphene_para"></p>
+        </section>
+        
+        <section>
+            <h2 data-i18n="section2_h2"></h2>
+            <p data-i18n="model_para"></p>
+            <model-viewer src="3d.gltf" alt="" camera-controls auto-rotate ar shadow-intensity="1" exposure="1" environment-image="neutral" data-i18n="alt_model"></model-viewer>
+        </section>
+        
+        <section>
+            <h2 data-i18n="section3_h2"></h2>
+            <p data-i18n="broader_para"></p>
+        </section>
+    </div>
+    <footer>
+        <p data-i18n="footer"></p>
+    </footer>
+    <button class="theme-toggle" onclick="toggleTheme()">🌙</button>
+    <script>
+        const translations = {
+            en: {
+                title: 'Biology and Graphene Glasses',
+                header: 'Biology and Graphene Glasses',
+                nav_home: 'Home',
+                nav_sun: 'Influence of Sunlight on Mood',
+                section1_h2: 'Introduction to Graphene in Ocular Biology',
+                graphene_para: 'Graphene family nanomaterials (GFNs) are rapidly emerging for ocular applications due to their outstanding physicochemical properties. These materials are being integrated into contact lenses for various purposes, including electromagnetic interference shielding, drug delivery, and sensing. Graphene-coated lenses have demonstrated the ability to retain higher levels of water compared to conventional contact lenses, helping to keep eyes moisturized. Moreover, graphene shows excellent short-term biocompatibility with corneal cells and tissue, paving the way for its use in synthetic keratoprostheses. Graphene-coated contact lenses could enable wearable eye electronics that monitor health while protecting against electromagnetic waves. Next-generation nanomaterials like graphene are advancing treatments for ocular anti-inflammatory therapies, potentially revolutionizing care for conditions such as dry eye syndrome. Graphene-derivative coatings are being investigated to prevent opacification in intraocular lenses (IOLs). Additionally, semitransparent image sensors based on graphene and quantum dots could be integrated into eyeglasses for eye-tracking applications. Graphene\'s high optical transparency makes it ideal for photonic applications in optics.',
+                section2_h2: '3D Model of Graphene Glasses',
+                model_para: 'Explore our interactive 3D model of graphene-enhanced glasses:',
+                alt_model: '3D model of graphene glasses',
+                section3_h2: 'Broader Biological Applications',
+                broader_para: 'Beyond ocular uses, graphene enhances bioactive glasses for bone repair by increasing electrical conductivity and compressive strength. It also imparts antibacterial properties to mesoporous bioactive glasses. Graphene biointerfaces enable optical stimulation of cells, with potential in neural interfaces.',
+                footer: '&copy; 2025 site from 9A "5D". All rights reserved.'
+            },
+            ru: {
+                title: 'Биология и графеновые очки',
+                header: 'Биология и графеновые очки',
+                nav_home: 'Главная',
+                nav_sun: 'Влияние солнца на настроение',
+                section1_h2: 'Введение в графен в окулярной биологии',
+                graphene_para: 'Графеновые наноматериалы семейства (GFNs) быстро появляются для окулярных применений благодаря их выдающимся физико-химическим свойствам. Эти материалы интегрируются в контактные линзы для различных целей, включая экранирование электромагнитных помех, доставку лекарств и сенсинг. Линзы с покрытием из графена продемонстрировали способность удерживать более высокий уровень воды по сравнению с обычными контактными линзами, помогая сохранять глаза увлажненными. Более того, графен показывает отличную краткосрочную биосовместимость с клетками роговицы и тканью, прокладывая путь для его использования в синтетических кератопротезах. Контактные линзы с покрытием из графена могли бы позволить носимую электронику для глаз, которая мониторит здоровье, защищая от электромагнитных волн. Наноматериалы следующего поколения, такие как графен, продвигают лечение окулярных противовоспалительных терапий, потенциально революционизируя уход за состояниями, такими как синдром сухого глаза. Покрытия на основе производных графена исследуются для предотвращения помутнения в интраокулярных линзах (IOLs). Кроме того, полупрозрачные датчики изображений на основе графена и квантовых точек могли бы быть интегрированы в очки для приложений отслеживания глаз. Высокая оптическая прозрачность графена делает его идеальным для фотонных приложений в оптике.',
+                section2_h2: '3D модель графеновых очков',
+                model_para: 'Исследуйте нашу интерактивную 3D модель очков с улучшенными графеновыми свойствами:',
+                alt_model: '3D модель графеновых очков',
+                section3_h2: 'Более широкие биологические применения',
+                broader_para: 'Помимо окулярных применений, графен улучшает биоактивные стекла для ремонта костей, повышая электропроводность и прочность на сжатие. Он также придает антибактериальные свойства мезопористым биоактивным стеклам. Биоинтерфейсы графена позволяют оптическую стимуляцию клеток, с потенциалом в нейронных интерфейсах.',
+                footer: '&copy; 2025 сайт от 9А "5D". Все права защищены.'
+            },
+            kk: {
+                title: 'Биология және Графен Көзілдіріктері',
+                header: 'Биология және Графен Көзілдіріктері',
+                nav_home: 'Бас',
+                nav_sun: 'Күн сәулесінің көңіл-күйге әсері',
+                section1_h2: 'Көз биологиясындағы графенге кіріспе',
+                graphene_para: 'Графен отбасына жататын наноматериалдар (GFN) олардың тамаша физика-химиялық қасиеттеріне байланысты көзге арналған қолданбаларда тез пайда болуда. Бұл материалдар электромагниттік кедергіні қорғау, дәрі-дәрмек жеткізу және сезімталдық сияқты әртүрлі мақсаттар үшін контакт линзаларына енгізілуде. Графенмен қапталған линзалар әдеттегі контакт линзаларымен салыстырғанда судың жоғары деңгейін сақтау қабілетін көрсетті, бұл көзді ылғалдандыруға көмектеседі. Сонымен қатар, графен роговица жасушалары мен тінімен қысқа мерзімді биосовместімділікті көрсетеді, бұл оның синтетикалық кератопротездерде қолдану жолын ашады. Графенмен қапталған контакт линзалары электромагниттік толқындардан қорғай отырып, денсаулықты бақылайтын киетін көз электроникасын қамтамасыз ете алады. Графен сияқты келесі буын наноматериалдары көзге қарсы қабыну терапияларының емдеуін алға жылжытуда, құрғақ көз синдромы сияқты жағдайларға күтімді төңкертіп, әлеуетті түрде өзгертуі мүмкін. Графен туындыларының жабындары ішкі линзалардағы (IOL) мөлдірліксізденуді болдырмау үшін зерттелуде. Сонымен қатар, графен және кванттық нүктелер негізіндегі жартылай мөлдір сурет сенсорлары көзді бақылау қолданбалары үшін көзілдіріктерге енгізілуі мүмкін. Графеннің жоғары оптикалық мөлдірлігі оны оптикадағы фотондық қолданбалар үшін идеалды етеді.',
+                section2_h2: 'Графен Көзілдіріктерінің 3D моделі',
+                model_para: 'Графенмен жақсартылған көзілдіріктердің интерактивті 3D моделін зерттеңіз:',
+                alt_model: 'Графен көзілдіріктерінің 3D моделі',
+                section3_h2: 'Кеңірек Биологиялық Қолданбалар',
+                broader_para: 'Көзге арналған қолданбалардан тыс, графен сүйектерді жөндеу үшін биоактивті шыныларды электр өткізгіштігін және қысымға төзімділігін арттыру арқылы жақсартады. Ол сонымен қатар мезопорозды биоактивті шыныларға антибактериалды қасиеттер береді. Графен био интерфейстері жасушаларды оптикалық ынталандыруды қамтамасыз етеді, нейрондық интерфейстерде әлеуеті бар.',
+                footer: '&copy; 2025 вебсайт 9А "5D". Барлық құқықтар қорғалған.'
+            }
+        };
+
+        function setLanguage(lang) {
+            localStorage.setItem('language', lang);
+            document.querySelectorAll('[data-i18n]').forEach(element => {
+                const key = element.dataset.i18n;
+                if (translations[lang][key]) {
+                    element.innerHTML = translations[lang][key];
+                }
+            });
+            document.title = translations[lang].title;
+            document.querySelectorAll('model-viewer[data-i18n]').forEach(mv => {
+                mv.alt = translations[lang][mv.dataset.i18n];
+            });
+        }
+
+        function toggleTheme() {
+            document.body.classList.toggle('dark-mode');
+        }
+
+        window.addEventListener('load', () => {
+            const savedLang = localStorage.getItem('language') || 'en';
+            setLanguage(savedLang);
+        });
+    </script>
+</body>
+</html>
