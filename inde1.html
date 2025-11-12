@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title data-i18n="title"></title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f0f4f8;
+            color: #333;
+            line-height: 1.6;
+        }
+        header {
+            background: linear-gradient(to right, #ffc107, #ffeb3b);
+            color: #333;
+            padding: 60px 20px;
+            text-align: center;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        header h1 {
+            margin: 0;
+            font-size: 3em;
+            animation: fadeIn 1s ease-in;
+        }
+        .lang-buttons {
+            position: absolute;
+            top: 20px;
+            right: 100px;
+        }
+        .lang-buttons button {
+            margin: 0 5px;
+        }
+        nav {
+            background: #343a40;
+            padding: 10px;
+            text-align: center;
+        }
+        nav a {
+            color: white;
+            text-decoration: none;
+            margin: 0 15px;
+            font-weight: bold;
+            transition: color 0.3s;
+        }
+        nav a:hover {
+            color: #ffc107;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+        section {
+            background: white;
+            border-radius: 8px;
+            padding: 30px;
+            margin-bottom: 40px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+        }
+        section:hover {
+            transform: translateY(-5px);
+        }
+        h2 {
+            color: #ffc107;
+            border-bottom: 2px solid #ffc107;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+        }
+        footer {
+            background: #343a40;
+            color: white;
+            text-align: center;
+            padding: 20px;
+            margin-top: 40px;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        @media (max-width: 768px) {
+            header h1 { font-size: 2em; }
+            nav a { display: block; margin: 10px 0; }
+        }
+        /* Dark mode */
+        body.dark-mode {
+            background-color: #121212;
+            color: #e0e0e0;
+        }
+        body.dark-mode header {
+            background: linear-gradient(to right, #f57f17, #fbc02d);
+            color: #fff;
+        }
+        body.dark-mode section {
+            background: #1e1e1e;
+        }
+        body.dark-mode h2 {
+            color: #ffeb3b;
+            border-bottom-color: #ffeb3b;
+        }
+        body.dark-mode nav, body.dark-mode footer {
+            background: #212121;
+        }
+        .theme-toggle {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: #fff;
+            border: none;
+            padding: 10px;
+            border-radius: 50%;
+            cursor: pointer;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            transition: background 0.3s;
+        }
+        body.dark-mode .theme-toggle {
+            background: #333;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1 data-i18n="header"></h1>
+        <div class="lang-buttons">
+            <button onclick="setLanguage('en')">EN</button>
+            <button onclick="setLanguage('ru')">RU</button>
+            <button onclick="setLanguage('kk')">KK</button>
+        </div>
+    </header>
+    <nav>
+        <a href="inde1.html" data-i18n="nav_home"></a>
+        <a href="sun.html" data-i18n="nav_sun"></a>
+    </nav>
+    <div class="container">
+        <section>
+            <h2 data-i18n="section1_h2"></h2>
+            <p data-i18n="sun_para"></p>
+        </section>
+        
+        <section>
+            <h2 data-i18n="section2_h2"></h2>
+            <p data-i18n="additional_para"></p>
+        </section>
+    </div>
+    <footer>
+        <p data-i18n="footer"></p>
+    </footer>
+    <button class="theme-toggle" onclick="toggleTheme()">🌙</button>
+    <script>
+        const translations = {
+            en: {
+                title: 'Influence of Sunlight on Mood',
+                header: 'Influence of Sunlight on Human Mood',
+                nav_home: 'Home',
+                nav_sun: 'Graphene glasses',
+                section1_h2: 'Biological Mechanisms of Sunlight on Mood',
+                sun_para: 'Sunlight exposure is associated with mental health, potentially through its effects on vitamin D levels in the body. Biological effects of sunlight include impacts on mood via ultraviolet radiation. Sunlight can brighten learning and memory, altering mood, behavior, and cognition through cellular mechanisms. Prolonged exposure to natural sunlight is linked to changes in brain structural markers. Changes in sunlight can affect mood due to neurochemical or brain hormonal shifts, leading to fatigue with less light. Sunlight reaches brain areas via specialized retinal cells (ipRGCs), influencing emotion, reward, and decision-making. Studies indicate that sunlight exposure increases serotonin production, enhancing well-being and quality of life. Appropriate sunlight supports neurotransmitters like serotonin, promoting mood stability and feelings of well-being. Sunshine and vitamin D improve mood by boosting beta-endorphins, nitric oxide, melatonin, serotonin, and dopamine. Exposure to sunlight affects behaviors such as sleep/wake patterns.',
+                section2_h2: 'Additional Health Benefits',
+                additional_para: 'Beyond mood, sunlight influences overall mental health, including reducing symptoms of seasonal affective disorder through circadian rhythm synchronization. Early morning bright light suppresses melatonin and alleviates related symptoms.',
+                footer: '&copy; 2025 site from 9A "5D". All rights reserved.'
+            },
+            ru: {
+                title: 'Влияние солнца на настроение',
+                header: 'Влияние солнца на настроение',
+                nav_home: 'Главная',
+                nav_sun: 'Графеновые очки',
+                section1_h2: 'Биологические механизмы влияния солнца на настроение',
+                sun_para: 'Экспозиция солнца ассоциируется с психическим здоровьем, потенциально через его эффекты на уровни витамина D в теле. Биологические эффекты солнца включают влияние на настроение через ультрафиолетовое излучение. Солнце может осветлить обучение и память, изменяя настроение, поведение и познание через клеточные механизмы. Продолжительная экспозиция натуральному солнцу связана с изменениями в структурных маркерах мозга. Изменения в солнце могут влиять на настроение из-за нейрохимических или гормональных сдвигов мозга, приводя к усталости при меньшем свете. Солнце достигает областей мозга через специализированные ретинальные клетки (ipRGCs), влияя на эмоции, вознаграждение и принятие решений. Исследования указывают, что экспозиция солнцу увеличивает производство серотонина, улучшая благополучие и качество жизни. Подходящее солнце поддерживает нейротрансмиттеры вроде серотонина, продвигая стабильность настроения и чувства благополучия. Солнечный свет и витамин D улучшают настроение, усиливая бета-эндорфины, оксид азота, мелатонин, серотонин и допамин. Экспозиция солнцу влияет на поведения, такие как паттерны сна/бодрствования.',
+                section2_h2: 'Дополнительные преимущества для здоровья',
+                additional_para: 'Помимо настроения, солнечный свет влияет на общее психическое здоровье, включая снижение симптомов сезонного аффективного расстройства через синхронизацию циркадного ритма. Яркий свет раннего утра подавляет мелатонин и облегчает связанные симптомы.',
+                footer: '&copy; 2025 сайт от 9А "5Д". Все права защищены.'
+            },
+            kk: {
+                title: 'Күн сәулесінің көңіл-күйге әсері',
+                header: 'Күн сәулесінің адамның көңіл-күйіне әсері',
+                nav_home: 'Бас',
+                nav_sun: 'Графен көзілдірігі',
+                section1_h2: 'Күн сәулесінің көңіл-күйге биологиялық механизмдері',
+                sun_para: 'Күн сәулесінің әсер етуі психикалық денсаулықпен байланысты, денедегі D витамині деңгейіне әсер ету арқылы. Күн сәулесінің биологиялық әсерлері ультракүлгін сәуле арқылы көңіл-күйге әсер етуді қамтиды. Күн сәулесі оқу мен естелікті жарқырата алады, жасушалық механизмдер арқылы көңіл-күйді, мінез-құлықты және когницияны өзгертеді. Табиғи күн сәулесінің ұзақ әсер етуі ми құрылымдық маркерлерінің өзгеруімен байланысты. Күн сәулесінің өзгеруі нейрохимиялық немесе ми гормондық ауытқуларға байланысты көңіл-күйге әсер етіп, аз жарықпен шаршауға әкеледі. Күн сәулесі арнайы торлы жасушалар (ipRGCs) арқылы ми аймақтарына жетеді, эмоцияны, сыйақыны және шешім қабылдауды әсер етеді. Зерттеулер күн сәулесінің әсер етуі серотонин өндірісін арттыратынын көрсетеді, әл-ауқат пен өмір сапасын жақсартады. Тиісті күн сәулесі серотонин сияқты нейротрансмиттерлерді қолдайды, көңіл-күй тұрақтылығын және әл-ауқат сезімдерін ілгерілетеді. Күн сәулесі және D витамині бета-эндорфиндерді, азот оксидін, мелатонинді, серотонинді және допаминді күшейту арқылы көңіл-күйді жақсартады. Күн сәулесінің әсер етуі ұйқы/ояну үлгілері сияқты мінез-құлықтарға әсер етеді.',
+                section2_h2: 'Қосымша Денсаулық Пайдалары',
+                additional_para: 'Көңіл-күйден басқа, күн сәулесі жалпы психикалық денсаулыққа әсер етеді, соның ішінде маусымдық аффективті бұзылыстың симптомдарын циркадиялық ырғақты синхрондау арқылы азайтады. Ерте таңғы жарқын жарық мелатонинді басады және байланысты симптомдарды жеңілдетеді.',
+                footer: '&copy; 2025 сайт 9А "5Д" тобынан. Барлық құқықтар қорғалған.'
+            }
+        };
+
+        function setLanguage(lang) {
+            localStorage.setItem('language', lang);
+            document.querySelectorAll('[data-i18n]').forEach(element => {
+                element.innerHTML = translations[lang][element.dataset.i18n];
+            });
+            document.title = translations[lang].title;
+        }
+
+        function toggleTheme() {
+            document.body.classList.toggle('dark-mode');
+        }
+
+        window.addEventListener('load', () => {
+            const savedLang = localStorage.getItem('language') || 'en';
+            setLanguage(savedLang);
+        });
+    </script>
+</body>
+</html>
